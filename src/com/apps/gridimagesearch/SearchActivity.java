@@ -89,8 +89,8 @@ public class SearchActivity extends Activity {
 		AsyncHttpClient client = new AsyncHttpClient();
 		//http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=Apple+Cake&start=4
 		
-		client.get("http://ajax.googleapis.com/ajax/services/search/images?rsz=8&" + 
-				"start=" + 0 + "&v=1.0&q=" + Uri.encode(queryText)+ "&as_sitesearch=" + siteFilter + "&imgsz=" + imageSize + "&imgtype=" + imageType + "&imgcolor=" + color,
+		client.get("http://ajax.googleapis.com/ajax/services/search/images?rsz=8&",  
+				//+"start=" + 0 + "&v=1.0&q=" + Uri.encode(queryText)+ "&as_sitesearch=" + siteFilter + "&imgsz=" + imageSize + "&imgtype=" + imageType + "&imgcolor=" + color,
 			new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -126,8 +126,8 @@ public class SearchActivity extends Activity {
 		AsyncHttpClient client = new AsyncHttpClient();
 		//http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=Apple+Cake&start=4
 		
-		client.get("http://ajax.googleapis.com/ajax/services/search/images?rsz=8&" + 
-				"start=" + counter + "&v=1.0&q=" + Uri.encode(queryText)+ "&as_sitesearch=" + siteFilter + "&imgsz" + imageSize + "&imgtype" + imageType + "&imgcolor" + color,
+		client.get("http://ajax.googleapis.com/ajax/services/search/images?rsz=8&" , 
+				//+"start=" + counter + "&v=1.0&q=" + Uri.encode(queryText)+ "&as_sitesearch=" + siteFilter + "&imgsz" + imageSize + "&imgtype" + imageType + "&imgcolor" + color,
 			new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
