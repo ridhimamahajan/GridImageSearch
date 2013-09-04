@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GridImageSearch</string>
+    <string name="action_settings">Settings</string>
+    <string name="etQueryHint">Enter your search</string>
+    <string name="btnSearchLabel">Search</string>
+    <string name="title_activity_image_display">ImageDisplayActivity</string>
+    <string name="title_activity_activity_image_show">Activity_image_show</string>
+    <string name="title_activity_advanced_search">AdvancedSearchActivity</string>
+    <string name="advanced_search_title">Advanced Search</string>
+    <string name="label_spinner_image_size">Select Image size</string>
+    <string name="label_spinner_color">Select color filter</string>
+    <string name="label_spinner_image_type">Select image type</string>
+    <string name="label_site_filter">Select site filter</string>
+	<string name="labelButtonSubmit">Save</string>
+	
+	
+	<string name="image_size_prompt">Select Image size</string>
+ 
+    <string-array name="image_size_arrays">
+        <item>icon</item>
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+        <item>xlarge</item>
+        <item>xxlarge</item>
+        <item>huge</item>
+       
+    </string-array>
+    
+    <string name="color_prompt">Choose color filter</string>
+
+    <string-array name="color_arrays">
+        <item>black</item>
+        <item>blue</item>
+        <item>brown</item>
+        <item>green</item>
+        <item>red</item>
+        <item>pink</item>
+       
+    </string-array>
+    
+    <string name="image_type_prompt">Choose image type</string>
+ 
+    <string-array name="image_type_arrays">
+        <item>face</item>
+        <item>photo</item>
+        <item>clipart</item>
+        <item>lineart</item>
+   
+    </string-array>
+        <string name="loadMoreBtnLabel">Load More</string>
+</resources>
