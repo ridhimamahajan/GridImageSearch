@@ -32,10 +32,10 @@ public class SearchActivity extends Activity {
 	EditText etQuery;
 	Button btnSearch;
 	GridView gvResults;
-	String imageSize = "icon"; 
-	String color = "black"; 
-	String imageType = "face";
-	String siteFilter = null; 
+	String imageSize = ""; 
+	String color = ""; 
+	String imageType = "";
+	String siteFilter = ""; 
 	ArrayList<ImageResult> imageResults = new ArrayList<ImageResult>();
 	ImageResultArrayAdapter imageAdapter ;
 	static int counter = 0;
@@ -59,10 +59,7 @@ public class SearchActivity extends Activity {
 			}
 			
 		});
-	 imageSize = (String) getIntent().getStringExtra("imageSize");
-	 color = (String) getIntent().getStringExtra("color");
-	 imageType = (String) getIntent().getStringExtra("imageType");
-	 siteFilter = (String) getIntent().getStringExtra("siteFilter");
+	
 //	 Log.d("DEBUG",imageSize);
 //	Log.d("DEBUG",color);
 //	Log.d("DEBUG",imageType);
@@ -83,14 +80,15 @@ public class SearchActivity extends Activity {
 	}
 	
 	public void onImageSearch(View v) {
+		counter = 0;
 		String queryText = etQuery.getText().toString();
 		Toast.makeText(this, "Searching "+queryText, Toast.LENGTH_SHORT).show();
 		
 		AsyncHttpClient client = new AsyncHttpClient();
 		//http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=Apple+Cake&start=4
 		
-		client.get("http://ajax.googleapis.com/ajax/services/search/images?rsz=8&",  
-				//+"start=" + 0 + "&v=1.0&q=" + Uri.encode(queryText)+ "&as_sitesearch=" + siteFilter + "&imgsz=" + imageSize + "&imgtype=" + imageType + "&imgcolor=" + color,
+		client.get("http://ajax.googleapis.com/ajax/services/search/images?rsz=8&" + "start=" + counter + "&v=1.0&q=" + Uri.encode(queryText)
+				+ "&as_sitesearch=" + siteFilter + "&imgsz=" + imageSize + "&imgtype=" + imageType + "&imgcolor=" + color,
 			new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -116,9 +114,46 @@ public class SearchActivity extends Activity {
 		Intent i = new Intent(getApplicationContext(), AdvancedSearchActivity.class);
 		//ImageResult imageResult = imageResults.get(position);
 		//i.putExtra("result", imageResult);
-		startActivity(i);
+		startActivityForResult(i,1);
+		
 	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		counter=0;
+		String queryText = etQuery.getText().toString();
+		if (resultCode == RESULT_OK && requestCode == 1) {
+			Toast.makeText(this, "Searching "+queryText, Toast.LENGTH_SHORT).show();
+			 imageSize = (String) data.getStringExtra("imageSize");
+			 color = (String) data.getStringExtra("color");
+			 imageType = (String) data.getStringExtra("imageType");
+			 siteFilter = (String) data.getStringExtra("siteFilter");
+			AsyncHttpClient client = new AsyncHttpClient();
+			//http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=Apple+Cake&start=4
+			
+			client.get("http://ajax.googleapis.com/ajax/services/search/images?rsz=8&" + "start=" + counter + "&v=1.0&q=" + Uri.encode(queryText)
+					+ "&as_sitesearch=" + siteFilter + "&imgsz=" + imageSize + "&imgtype=" + imageType + "&imgcolor=" + color,
+				new JsonHttpResponseHandler() {
+	            @Override
+	            public void onSuccess(JSONObject response) {
+	            	JSONArray imageJsonResults = null; 
+	                // Do something with the response
+	            	try{
+	            		imageJsonResults = response.getJSONObject("responseData").getJSONArray("results");
+	            		System.out.println(imageJsonResults);
+	            		imageAdapter.clear();
+	            		imageAdapter.addAll(ImageResult.fromJsonArray(imageJsonResults));
+	            		Log.d("DEBUG",imageResults.toString());
+	            	}
+	            	catch (JSONException e)
+	            	{
+	            		e.printStackTrace();
+	            	}
+	                
+	            }
+	        });
+	  }
+	} 
 	public void onLoadMore (View v){
 		counter +=8;
 		String queryText = etQuery.getText().toString();
@@ -126,8 +161,8 @@ public class SearchActivity extends Activity {
 		AsyncHttpClient client = new AsyncHttpClient();
 		//http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=Apple+Cake&start=4
 		
-		client.get("http://ajax.googleapis.com/ajax/services/search/images?rsz=8&" , 
-				//+"start=" + counter + "&v=1.0&q=" + Uri.encode(queryText)+ "&as_sitesearch=" + siteFilter + "&imgsz" + imageSize + "&imgtype" + imageType + "&imgcolor" + color,
+		client.get("http://ajax.googleapis.com/ajax/services/search/images?rsz=8&" +"start=" + counter + "&v=1.0&q=" + Uri.encode(queryText)
+				+ "&as_sitesearch=" + siteFilter + "&imgsz=" + imageSize + "&imgtype=" + imageType + "&imgcolor=" + color,
 			new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {

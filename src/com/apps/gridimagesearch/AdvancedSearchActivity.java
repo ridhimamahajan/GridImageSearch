@@ -34,17 +34,23 @@ public class AdvancedSearchActivity extends Activity {
 	}
 	
 	public void onSave(View v) {
-		Intent i = new Intent(getApplicationContext(), SearchActivity.class);
+		Intent data = new Intent();
 		Log.d("DEBUG",spinner_image_size.getSelectedItem().toString());
 		Log.d("DEBUG",spinner_image_type.getSelectedItem().toString());
 		Log.d("DEBUG",spinner_color.getSelectedItem().toString());
 		Log.d("DEBUG",etSiteFilter.getText().toString());
 		//ImageResult imageResult = imageResults.get(position);
-		i.putExtra("imageSize",spinner_image_size.getSelectedItem().toString() );
-		i.putExtra("imageType",spinner_image_type.getSelectedItem().toString() );
-		i.putExtra("color",spinner_color.getSelectedItem().toString() );
-		i.putExtra("siteFilter",etSiteFilter.getText().toString() );
-		startActivity(i);
+		data.putExtra("imageSize",spinner_image_size.getSelectedItem().toString() );
+		data.putExtra("imageType",spinner_image_type.getSelectedItem().toString() );
+		data.putExtra("color",spinner_color.getSelectedItem().toString() );
+		data.putExtra("siteFilter",etSiteFilter.getText().toString() );
+		if (getParent() == null) {
+		    setResult(Activity.RESULT_OK, data);
+		} else {
+		    getParent().setResult(Activity.RESULT_OK, data);
+		}
+		//setResult(RESULT_OK, data); // set result code and bundle data for response
+		super.finish();
 	}
 
 }
